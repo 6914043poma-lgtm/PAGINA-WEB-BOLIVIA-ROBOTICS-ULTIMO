@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bolivia Robotics - Componentes de Robótica</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS Personalizado -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <span class="custom-robot-icon"></span> Bolivia Robotics
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#catalogo">Catálogo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#categorias">Categorías</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#nosotros">Nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contacto">Contacto</a>
+                    </li>
+                </ul>
+                <div class="d-flex ms-lg-3">
+                    <button class="btn btn-outline-light position-relative" id="cartToggle">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cartCount">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h1 class="hero-title">Componentes de Robótica en Bolivia</h1>
+                    <p class="hero-subtitle">Encuentra todo lo que necesitas para tus proyectos de robótica, desde Arduino hasta sensores especializados. Envíos a todo el país.</p>
+                    <a href="#catalogo" class="btn btn-primary btn-lg">Ver Catálogo</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catálogo y Filtros -->
+    <section class="container py-5" id="catalogo">
+        <h2 class="section-title">Catálogo de Productos</h2>
+        
+        <!-- Barra de búsqueda -->
+        <div class="search-box">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="searchInput" placeholder="Busca componentes ejemplo: Arduino" aria-label="Buscar productos">
+                <button class="btn btn-primary" type="button" id="searchButton">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Filtros por categoría -->
+        <div class="category-filter" id="categorias">
+            <div class="d-flex flex-wrap justify-content-center">
+                <button class="btn btn-outline-primary category-btn active" data-category="all">Todos</button>
+                <button class="btn btn-outline-primary category-btn" data-category="arduino">Arduino</button>
+                <button class="btn btn-outline-primary category-btn" data-category="sensores">Sensores</button>
+                <button class="btn btn-outline-primary category-btn" data-category="motores">Motores</button>
+                <button class="btn btn-outline-primary category-btn" data-category="kits">Kits</button>
+                <button class="btn btn-outline-primary category-btn" data-category="raspberry">Raspberry Pi</button>
+                <button class="btn btn-outline-primary category-btn" data-category="modulos">Módulos</button>
+                <button class="btn btn-outline-primary category-btn" data-category="herramientas">Herramientas</button>
+                <button class="btn btn-outline-primary category-btn" data-category="otros">Otros</button>
+            </div>
+        </div>
+        
+        <!-- Lista de productos -->
+        <div class="row" id="productsContainer">
+            <!-- Los productos se cargarán dinámicamente con JavaScript -->
+        </div>
+    </section>
+
+    <!-- Carrito de Compras (Sidebar) -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="mb-0">Carrito de Compras</h4>
+            <button class="btn btn-outline-secondary btn-sm" id="closeCart">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div id="cartItems">
+            <!-- Los items del carrito se cargarán aquí -->
+            <p class="text-muted text-center" id="emptyCartMessage">Tu carrito está vacío</p>
+        </div>
+        
+        <div class="mt-4 pt-3 border-top d-none" id="cartSummary">
+            <div class="d-flex justify-content-between mb-2">
+                <span>Subtotal:</span>
+                <span id="cartSubtotal">Bs. 0.00</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+                <span>Envío:</span>
+                <span id="cartShipping">Bs. 15.00</span>
+            </div>
+            <div class="d-flex justify-content-between mb-3">
+                <span>Descuento:</span>
+                <span id="cartDiscount">Bs. 0.00</span>
+            </div>
+            <div class="d-flex justify-content-between mb-4 cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">Bs. 15.00</span>
+            </div>
+            
+            <div class="d-grid gap-2">
+                <button class="btn btn-primary" id="checkoutBtn">Continuar con la Compra</button>
+                <button class="btn btn-outline-secondary" id="clearCartBtn">Vaciar Carrito</button>
+            </div>
+            
+            <div class="mt-4">
+                <h6>Métodos de Pago</h6>
+                <div class="payment-methods">
+                    <img src="https://media.licdn.com/dms/image/v2/D4E22AQHr7tTbDPqguw/feedshare-shrink_800/feedshare-shrink_800/0/1693527820444?e=2147483647&v=beta&t=1LztXgDFzcZ7jd-D_5f-vg0UYp0Pbru4Wrw6RgnExeI" alt="QR Code Bolivia Robotics" title="Pago con QR - Bolivia Robotics">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOplkxFj3gHd_MfswJOcuNaKl8Sk2jm0usKw&s" alt="Banco Unión" title="Transferencia Banco Unión">
+                    <img src="data:image/jpeg;base64,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" alt="Tarjeta de Crédito" title="Tarjeta de Crédito/Débito">
+                </div>
+                <p class="small text-muted mt-2">Se le enviará un código QR una ves confirmada su compra, para realizar el pago</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para datos de contacto -->
+    <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="contactModalLabel">Información para el Pedido</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="contactForm">
+                        <div class="mb-3">
+                            <label for="customerName" class="form-label">Nombre Completo *</label>
+                            <input type="text" class="form-control" id="customerName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="customerPhone" class="form-label">Celular / WhatsApp *</label>
+                            <input type="tel" class="form-control" id="customerPhone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="customerEmail" class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="customerEmail">
+                        </div>
+                        <div class="mb-3">
+                            <label for="customerAddress" class="form-label">Dirección de Envío *</label>
+                            <textarea class="form-control" id="customerAddress" rows="2" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="customerNotes" class="form-label">Nota adicional</label>
+                            <textarea class="form-control" id="customerNotes" rows="2"></textarea>
+                        </div>
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <small>Después de confirmar, se abrirá WhatsApp para que envíes tu pedido automáticamente.</small>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="confirmOrderBtn">
+                        <i class="fab fa-whatsapp me-2"></i>Confirmar y Enviar por WhatsApp!
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección Nosotros -->
+    <section class="container py-5" id="nosotros">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h2 class="section-title">Sobre Bolivia Robotics</h2>
+                <p class="text-justify">Somos una empresa boliviana especializada en la importación, comercialización y distribución 
+                    de componentes de robótica y electrónica, orientada a fortalecer el acceso a tecnología moderna 
+                    y confiable en todo el territorio nacional. Trabajamos con marcas reconocidas y proveedores 
+                    internacionales para garantizar productos de alta calidad, compatibles con estándares educativos 
+                    e industriales para el desarrollo de proyectos académicos, prototipos, automatización, domótica, 
+                    IoT y soluciones industriales.</p>
+                <p class="text-justify">Además de la venta de componentes, ofrecemos asesoría técnica especializada, soporte en el 
+                    diseño y desarrollo de proyectos, y acompañamiento en procesos de aprendizaje, contribuyendo 
+                    activamente a la formación de talento humano altamente capacitado.</p>
+                <p class="text-justify">Contamos con una amplia variedad de productos, desde placas Arduino hasta sensores especializados, motores y kits completos para todo tipo de proyectos.</p>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-check text-primary me-2"></i> Productos de alta calidad</li>
+                    <li><i class="fas fa-check text-primary me-2"></i> Envíos a todo el país</li>
+                    <li><i class="fas fa-check text-primary me-2"></i> Asesoría técnica especializada</li>
+                    <li><i class="fas fa-check text-primary me-2"></i> Garantía en todos nuestros productos</li>
+                </ul>
+                <div class="mt-4">
+                    <a href="https://wa.me/59172035156?text=Hola Bolivia Robotics, queiro mas información sobre sus productos" 
+                       class="btn btn-success me-2" target="_blank">
+                        <i class="fab fa-whatsapp me-2"></i>WhatsApp
+                    </a>
+                    <a href="https://m.me/BoliviaRobotics" class="btn btn-primary me-2" target="_blank">
+                        <i class="fab fa-facebook-messenger me-2"></i>Messenger
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <img src="https://cdn.pixabay.com/photo/2023/06/23/02/00/robotics-8082570_1280.png" class="img-fluid rounded shadow" alt="Equipo de trabajo en robótica">
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contacto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h4 class="mb-4">Bolivia Robotics</h4>
+                    <p>Tu proveedor confiable de componentes de robótica en Bolivia.</p>
+                    <div class="mt-3">
+                        <a href="https://facebook.com/BoliviaRobotics" class="text-white me-3" target="_blank">
+                            <i class="fab fa-facebook fa-lg"></i>
+                        </a>
+                        <a href="https://instagram.com/BoliviaRobotics" class="text-white me-3" target="_blank">
+                            <i class="fab fa-instagram fa-lg"></i>
+                        </a>
+                        <a href="https://twitter.com/BoliviaRobotics" class="text-white me-3" target="_blank">
+                            <i class="fab fa-twitter fa-lg"></i>
+                        </a>
+                        <a href="https://youtube.com/@BoliviaRobotics" class="text-white me-3" target="_blank">
+                            <i class="fab fa-youtube fa-lg"></i>
+                        </a>
+                        <a href="https://wa.me/59172035156?text=Hola Bolivia Robotics, quiero mas información sobre sus productos" 
+                           class="text-white" target="_blank">
+                            <i class="fab fa-whatsapp fa-lg"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 class="mb-4">Contacto</h5>
+                    <p><i class="fas fa-map-marker-alt me-2"></i> C. Uyuni #8, La Paz, Bolivia</p>
+                    <p><i class="fas fa-phone me-2"></i> +591 72035156</p>
+                    <p><i class="fas fa-envelope me-2"></i> bolivia_robotics@gmail.com</p>
+                    <p><i class="fab fa-whatsapp me-2"></i> +591 72035156</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 class="mb-4">Horario de Atención</h5>
+                    <p>Lunes a Viernes: 9:00 - 18:00</p>
+                    <p>Sábados: 9:00 - 13:00</p>
+                    <p>Domingos: Cerrado</p>
+                    <div class="mt-3">
+                        <a href="https://wa.me/59172035156?text=Hola Bolivia Robotics, quiero adquirir sus productos." 
+                           class="btn btn-outline-light btn-sm" target="_blank">
+                            <i class="fab fa-whatsapp me-1"></i> Consulta por WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-4 mb-4">
+            <div class="text-center">
+                <p>&copy; 2026 Bolivia Robotics. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS y dependencias -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- JavaScript Personalizado -->
+    <script src="main.js"></script>
+</body>
+</html>
